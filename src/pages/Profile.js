@@ -1,8 +1,27 @@
+import { Link, useNavigate } from "react-router-dom";
+
 import { FaHome } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const Profile = () => {
+
+    const navigate = useNavigate();
+
+    const [nickname, setNickname] = useState(localStorage.getItem('username'));
+
+    const [activeState, setActiveState] = useState({
+        A: true
+    });
+
+    const [alert, setAlert] = useState({
+        message: 'Good Day, ' + nickname + "!",
+        error: false
+    });
+
+    const handleLogout = () => {
+        navigate("/login")
+        localStorage.clear();
+    }
 
     return (<>
         <div className='flex flex-col items-center justify-between h-screen overflow-y-hidden bg-gradient-to-r from-gray-200 to-gray-300'>
@@ -14,15 +33,15 @@ const Profile = () => {
                 </Link>
                 {/* LINKS */}
                 <div className="flex items-center justify-end w-2/6 h-full gap-3 ">
-                    <Link Link to={'/dashboard'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-md w-fit shadow-black">
+                    <Link to={'/dashboard'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-md w-fit shadow-black">
                         <FaHome width={20} className="my-1 text-red-50"/>
                     </Link>
                     <Link to={'/profile'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-green-700 rounded-full shadow-md w-fit shadow-black">
-                        Mark Edison
+                        {nickname}
                     </Link>
-                    <Link to={'/'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-md w-fit shadow-black">
+                    <div onClick={handleLogout} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-md cursor-pointer w-fit shadow-black">
                         Logout
-                    </Link>
+                    </div>
                 </div>
             </div>
             {/* CONTENT */}

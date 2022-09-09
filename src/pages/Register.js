@@ -1,3 +1,4 @@
+import { Link, useNavigate } from "react-router-dom";
 import {
     barangays,
     cities,
@@ -5,7 +6,8 @@ import {
     regions,
 } from "select-philippines-address";
 
-import { Link } from "react-router-dom";
+import { animateScroll } from 'react-scroll'
+import axios from "axios";
 import { useEffect } from "react";
 import { useLocation } from "react-router";
 import { useState } from "react";
@@ -13,6 +15,9 @@ import { useState } from "react";
 const Register = () => {
 
     const location = useLocation();
+    const navigate = useNavigate();
+
+    var scroll = animateScroll;
 
     const [alert, setAlert] = useState({
         message: 'Complete all the necessary fields',
@@ -84,6 +89,93 @@ const Register = () => {
         setBarangayAddr(e.target.selectedOptions[0].text);
     }
 
+    const handleRegister = (e) => {
+        if(!gender){
+            setAlert({
+                message: "Select a gender",
+                error: true
+            });
+            scroll.scrollToTop();
+        }else if(mobileNo.length < 11){
+            setAlert({
+                message: "Enter a valid mobile number",
+                error: true
+            });
+            scroll.scrollToTop();
+        }else if(!barangayAddr || !cityAddr || !provinceAddr || !regionAddr){
+            setAlert({
+                message: "Complete the address information",
+                error: true
+            });
+            scroll.scrollToTop();
+        }else if(bloodType === "default"){
+            setAlert({
+                message: "Select a Blood Type",
+                error: true
+            });
+            scroll.scrollToTop();
+        }else if(password !== confirmPassword){
+            setAlert({
+                message: "Passwords does not match",
+                error: true
+            });
+            scroll.scrollToTop();
+        }else {
+            var addressID ;
+            axios.post('http://localhost:5000/address/', {
+                region: regionAddr,
+                province: provinceAddr,
+                city: cityAddr,
+                barangay: barangayAddr,
+                addressLine1: address1
+            })
+            .then(function (response) {
+                // SUCCESS
+                console.log("New Address Success", response.data)
+                addressID = response.data.id;
+                axios.post('http://localhost:5000/user/', {
+                    addressID: addressID,
+                    lastname: lastName,
+                    firstname: firstName,
+                    middlename: middleName,
+                    gender: gender,
+                    age: age,
+                    mobileNo: mobileNo,
+                    email: email,
+                    profilePicture: profilePicture,
+                    bloodType: bloodType,
+                    password: password,
+                    accountType: isDonor ? "Donor" : "Looking for Donor",
+                })
+                .then(function (response) {
+                    // SUCCESS
+                    console.log("New User Success", response.data)
+                    console.log("New User ID", response.data.id)
+                    // SAVE ID TO LOCALSTORAGE
+                    navigate("/login")
+                })
+                .catch(function (error) {
+                    // FAIL
+                    console.log("New User Failed", error)
+                    setAlert({
+                        message: error.response.data.message,
+                        error: true
+                    });
+                });
+            })
+            .catch(function (error) {
+                // FAIL
+                console.log("New Address Failed", error)
+                setAlert({
+                    message: error.response.data.message,
+                    error: true
+                });
+            });
+        }
+
+        e.preventDefault();
+    };
+
     useEffect(() => {
         region()
     }, [])
@@ -122,7 +214,7 @@ const Register = () => {
                             {alert.message}
                         </div>
                     }
-                    <form onSubmit={() =>{}} className="flex flex-col items-start justify-center w-full gap-3 ">
+                    <form onSubmit={handleRegister} className="flex flex-col items-start justify-center w-full gap-3 ">
                         <div className='text-2xl font-semibold'>
                             Basic Information
                         </div>
