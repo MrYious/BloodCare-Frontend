@@ -75,6 +75,7 @@ const Register = () => {
         setProvinceAddr(e.target.selectedOptions[0].text);
         cities(e.target.value).then(response => {
             setCity(response);
+            setBarangay([]);
         });
     }
 

@@ -46,19 +46,19 @@ const Dashboard = () => {
             {/* CONTENT */}
             <div className="flex w-full h-full">
                 <div className="flex flex-col items-center w-1/4 gap-4 p-6 ">
-                    <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white rounded-full  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-sm"} `}>
+                    <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white rounded-full  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
                         Browse
                     </Link>
-                    <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white rounded-full ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black  shadow-md"} `}>
+                    <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white rounded-full ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                         Pending Requests
                     </Link>
-                    <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white rounded-full ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black  shadow-md"} `}>
+                    <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white rounded-full ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                         Active Requests
                     </Link>
-                    <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white  rounded-full ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black  shadow-md"} `}>
+                    <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white  rounded-full ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                         History
                     </Link>
-                    <Link to={'reviews'} onClick={() => {setActiveState({E: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white  rounded-full ${activeState.E ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black  shadow-md"} `}>
+                    <Link to={'reviews'} onClick={() => {setActiveState({E: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white  rounded-full ${activeState.E ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                         Reviews
                     </Link>
                 </div>

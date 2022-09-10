@@ -24,10 +24,11 @@ const Login = () => {
             // SUCCESS
             console.log("Login Success", response.data)
             localStorage.setItem('loggedIn', "true");
-            localStorage.setItem('userID', response.data.id);
-            localStorage.setItem('username', response.data.firstname);
-            localStorage.setItem('addressID', response.data.addressID);
-            localStorage.setItem('userData', response.data);
+            localStorage.setItem('userID', response.data.user.id);
+            localStorage.setItem('username', response.data.user.firstname);
+            localStorage.setItem('addressID', response.data.user.addressID);
+            localStorage.setItem('userData', JSON.stringify(response.data.user));
+            localStorage.setItem('userAddressData', JSON.stringify(response.data.userAddress));
             navigate("/dashboard")
         })
         .catch(function (error) {
