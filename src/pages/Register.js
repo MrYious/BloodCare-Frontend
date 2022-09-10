@@ -151,8 +151,6 @@ const Register = () => {
                 .then(function (response) {
                     // SUCCESS
                     console.log("New User Success", response.data)
-                    console.log("New User ID", response.data.id)
-                    // SAVE ID TO LOCALSTORAGE
                     navigate("/login")
                 })
                 .catch(function (error) {
