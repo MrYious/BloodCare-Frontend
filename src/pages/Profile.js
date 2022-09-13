@@ -8,6 +8,8 @@ import {
 } from "select-philippines-address";
 import { useEffect, useState } from "react";
 
+import Datetime from "../components/Datetime";
+import axios from "axios";
 import placeholder from "../assets/placeholder.jpg";
 
 const Profile = () => {
@@ -35,7 +37,7 @@ const Profile = () => {
     const [age, setAge] = useState(localUserData.age);
     const [mobileNo, setMobileNo] = useState(localUserData.mobileNo);
     const [email, setEmail] = useState(localUserData.email);
-    const [profilePicture, setProfilePicture] = useState(localUserData.profilePicture);
+    const [profilePicture, setProfilePicture] = useState('');
 
     const [address1, setAddress1] = useState(localUserAddressData.addressLine1);
 
@@ -54,6 +56,35 @@ const Profile = () => {
     const BLOOD_TYPES = [
         "A+", "O+", "B+", "AB+", "A-", "O-", "B-", "AB-"
     ]
+
+    const stateReset = () => {
+        let localUserData = JSON.parse(localStorage.getItem('userData'));
+        let localUserAddressData = JSON.parse(localStorage.getItem('userAddressData'));
+        setLastName(localUserData.lastname)
+        setFirstName(localUserData.firstname)
+        setMiddleName(localUserData.middlename)
+        setGender(localUserData.gender)
+        setAge(localUserData.age)
+        setMobileNo(localUserData.mobileNo)
+        setEmail(localUserData.email)
+        setProfilePicture('')
+        setAddress1(localUserAddressData.addressLine1)
+        setBloodType(localUserData.bloodType)
+        setRegionAddr(localUserAddressData.region)
+        setProvinceAddr(localUserAddressData.province)
+        setCityAddr(localUserAddressData.city)
+        setBarangayAddr(localUserAddressData.barangay)
+    }
+
+    const onSelectFile = (e) => {
+        const selectedFiles = e.target.files;
+        const selectedFilesArray = Array.from(selectedFiles);
+        const image = URL.createObjectURL(selectedFilesArray[0]);
+        setProfilePicture(image);
+
+        console.log("Image ", image);
+        console.log("Type ", typeof(image));
+    }
 
     const region = () => {
         regions().then(response => {
@@ -86,6 +117,100 @@ const Profile = () => {
 
     const brgy = (e) => {
         setBarangayAddr(e.target.selectedOptions[0].text);
+    }
+
+    const handleSaveChanges = (e) => {
+        if(!gender){
+            setAlert({
+                message: "Select a gender",
+                error: true
+            });
+        }else if(mobileNo.length < 11){
+            setAlert({
+                message: "Enter a valid mobile number",
+                error: true
+            });
+        }else if(!barangayAddr || !cityAddr || !provinceAddr || !regionAddr){
+            setAlert({
+                message: "Complete the address information",
+                error: true
+            });
+        }else if(bloodType === "default"){
+            setAlert({
+                message: "Select a Blood Type",
+                error: true
+            });
+        }else {
+            axios.patch(`http://localhost:5000/address/${localUserAddressData.id}`, {
+                region: regionAddr,
+                province: provinceAddr,
+                city: cityAddr,
+                barangay: barangayAddr,
+                addressLine1: address1
+            })
+            .then(function (response) {
+                // SUCCESS
+                console.log("Update Address Success", response.data)
+                axios.patch(`http://localhost:5000/user/${localUserData.id}`, {
+                    addressID: localUserAddressData.id,
+                    lastname: lastName,
+                    firstname: firstName,
+                    middlename: middleName,
+                    gender: gender,
+                    age: age,
+                    mobileNo: mobileNo,
+                    email: email,
+                    profilePicture: '',
+                    bloodType: bloodType,
+                    password: localUserData.password,
+                    accountType: isDonor ? "Donor" : "Looking for Donor",
+                })
+                .then(function (response) {
+                    // SUCCESS
+                    console.log("Update User Success", response.data)
+                    setIsEdit(false);
+                    handleUpdateLocalUserData();
+                })
+                .catch(function (error) {
+                    // FAIL
+                    console.log("Update User Failed", error)
+                    setAlert({
+                        message: error.response.data.message,
+                        error: true
+                    });
+                });
+            })
+            .catch(function (error) {
+                // FAIL
+                console.log("Update Address Failed", error)
+                setAlert({
+                    message: error.response.data.message,
+                    error: true
+                });
+            });
+        }
+
+        e.preventDefault();
+    };
+
+    const handleUpdateLocalUserData = () => {
+        axios.post('http://localhost:5000/validate/refresh', {
+            id: localUserData.id,
+            addressID: localUserAddressData.id
+        })
+        .then(function (response) {
+            // SUCCESS
+            localStorage.setItem('username', response.data.user.firstname);
+            localStorage.setItem('userData', JSON.stringify(response.data.user));
+            localStorage.setItem('userAddressData', JSON.stringify(response.data.userAddress));
+            console.log("Refresh Success")
+            stateReset();
+        })
+        .catch(function (error) {
+            // FAIL
+            console.log("Refresh Failed ", error)
+            console.log("Refresh Failed ", error.response.data.message)
+        });
     }
 
     const handleLogout = () => {
@@ -123,25 +248,28 @@ const Profile = () => {
                 </div>
             </div>
             {/* CONTENT */}
-            <div className="flex flex-col items-start justify-start w-full h-full gap-3 px-10 py-4 overflow-y-hidden">
+            <div className="flex flex-col items-start justify-start w-full h-full gap-5 px-10 overflow-y-hidden">
                 {/* Header */}
-                <div className="flex items-center justify-between w-full px-10 py-4 border-b-4 border-red-700 gap-7">
+                <div className="flex items-center justify-between w-full px-10 py-3 border-b-4 border-red-700 gap-7">
                     <div className="text-3xl font-bold ">
                         My Profile
                     </div>
                     <div className="flex gap-2 w-fit">
                         {
                             !isEdit ? <>
-                                <div onClick={() => {setIsEdit(true)}} className="flex gap-1 px-5 py-2 text-xl font-medium text-white bg-red-900 rounded-full shadow-md cursor-pointer shadow-black">
+                                <div onClick={() => {setIsEdit(true)}} className="flex items-center justify-center gap-1 px-4 py-1 text-lg font-medium text-white bg-red-900 rounded-full shadow-md cursor-pointer shadow-black">
                                     <FaEdit width={20} className="my-1 text-red-50"/>
                                     Edit
                                 </div>
                             </> : <>
-                                <div onClick={() => {}} className="flex gap-1 px-5 py-2 text-xl font-medium text-white bg-red-900 rounded-full shadow-md cursor-pointer shadow-black">
+                                <div onClick={handleSaveChanges} className="flex items-center justify-center gap-1 px-4 py-1 text-lg font-medium text-white bg-red-900 rounded-full shadow-md cursor-pointer shadow-black">
                                     <FaSave width={20} className="my-1 text-red-50"/>
                                     Save Changes
                                 </div>
-                                <div onClick={() => {setIsEdit(false)}} className="flex gap-1 px-5 py-2 text-xl font-medium text-white bg-red-900 rounded-full shadow-md cursor-pointer shadow-black">
+                                <div onClick={() => {
+                                    setIsEdit(false)
+                                    stateReset()
+                                }} className="flex items-center justify-center gap-1 px-4 py-1 text-lg font-medium text-white bg-red-900 rounded-full shadow-md cursor-pointer shadow-black">
                                     <FaTimes width={20} className="my-1 text-red-50"/>
                                     Cancel
                                 </div>
@@ -150,26 +278,33 @@ const Profile = () => {
                     </div>
                 </div>
                 {/* Scrollable Contents */}
-                <form onSubmit={()=> {}} className="flex items-start justify-start w-full h-full gap-4 p-4 border-2 border-red-700 bg-red-50 rounded-xl ">
+                <form onSubmit={()=> {}} className="flex items-start justify-start w-full gap-4 p-3 border-2 border-red-700 h-fit bg-red-50 rounded-xl ">
                     {/* COL1 */}
                     <div className="flex flex-col w-1/2 gap-2 h-fit">
                         <div className="flex justify-start gap-5 item-center">
-                            <div className="w-48 p-2 h-fit">
-                                <img src={placeholder} alt="profile" width={"100%"} className="border-2 border-red-900 rounded-full shadow-lg cursor-pointer shadow-red-900"/>
-                            </div>
+                            <label className="p-2 w-44 h-fit">
+                                <img src={profilePicture ? profilePicture : placeholder} alt="profile" width={"100%"} className="border-2 border-red-900 rounded-full shadow-lg cursor-pointer shadow-red-900"/>
+                                <input
+                                    type="file"
+                                    name="images"
+                                    onChange={onSelectFile}
+                                    accept="image/png, image/jpeg, image/jpg"
+                                    className="hidden"
+                                />
+                            </label>
                             <div className="flex flex-col justify-center gap-2 ">
-                                <div className="text-xl">
+                                <div className="text-lg">
                                     Account Type:
                                 </div>
-                                <div className="text-3xl font-bold tracking-tight ">
+                                <div className="text-2xl font-bold tracking-tight ">
                                     {isDonor ? "DONOR" : "LOOKING FOR DONOR"}
                                 </div>
                             </div>
                         </div>
-                        <div className='text-2xl font-semibold'>
+                        <div className='text-xl font-semibold'>
                             Basic Information
                         </div>
-                        <div className='flex flex-col items-start justify-center w-full gap-3 pl-5'>
+                        <div className='flex flex-col items-start justify-center w-full gap-1 pl-5'>
                             <div className='flex items-center gap-3'>
                                 <div className='mr-5 font-bold'>Full Name: </div>
                                 <input className="px-2 py-1 border-2 border-gray-700 border-solid rounded-sm bg-slate-100" maxLength="30" size={15} value={lastName} onChange={(e)=> {setLastName(e.target.value)}} type={"text"} placeholder="Last Name" autoComplete="last name" required disabled={!isEdit}/>
@@ -197,12 +332,12 @@ const Profile = () => {
                     </div>
                     {/* COL2 */}
                     <div className="flex flex-col w-1/2 gap-3 h-fit">
-                        <div className='text-2xl font-semibold'>
+                        <div className='text-xl font-semibold'>
                             Address Information
                         </div>
                         <div className='flex flex-col items-start justify-center w-full gap-3 pl-5'>
                             <div className='flex items-center gap-4 '>
-                                <div className='font-bold mr-9'>Region: </div>
+                                <div className='mr-8 font-bold'>Region: </div>
                                 {
                                     !isEdit ? <>
                                         <div className="py-1">{localUserAddressData.region}</div>
@@ -219,12 +354,12 @@ const Profile = () => {
                                 }
                             </div>
                             <div className='flex items-center gap-7 '>
-                                <div className='mr-3 font-bold'>Province: </div>
+                                <div className='mr-2 font-bold'>Province: </div>
                                 {
                                     !isEdit ? <>
                                         <div className="py-1">{localUserAddressData.province}</div>
                                     </> : <>
-                                        <select className="px-2 py-1 border-2 border-gray-700 rounded-lg w-52" onChange={city} disabled={!isEdit}>
+                                        <select className="px-2 py-1 border-2 border-gray-700 rounded-lg w-44" onChange={city} disabled={!isEdit}>
                                             <option disabled>Select Province</option>
                                             {provinceData && provinceData.length > 0 && provinceData.map((item) =>
                                                 <option key={item.province_code} value={item.province_code}>
@@ -239,7 +374,7 @@ const Profile = () => {
                                     !isEdit ? <>
                                         <div className="py-1">{localUserAddressData.city}</div>
                                     </> : <>
-                                        <select className="px-2 py-1 border-2 border-gray-700 rounded-lg w-fit" onChange={barangay} disabled={!isEdit}>
+                                        <select className="px-2 py-1 border-2 border-gray-700 rounded-lg w-44" onChange={barangay} disabled={!isEdit}>
                                             <option disabled>Select City</option>
                                             {cityData && cityData.length > 0 && cityData.map((item) =>
                                                 <option key={item.city_code} value={item.city_code}>
@@ -272,7 +407,7 @@ const Profile = () => {
                             <p className="font-bold ">Address Line 2:</p>
                             <input className="px-2 py-1 border-2 border-gray-700 border-solid rounded-sm bg-slate-100" maxLength="150" size={70} value={barangayAddr + ", " + cityAddr + ", " + provinceAddr + ", " + regionAddr} type={"text"} disabled/>
                         </div>
-                        <div className='text-2xl font-semibold'>
+                        <div className='text-xl font-semibold'>
                             Blood Information
                         </div>
                         <div className='flex flex-col items-start justify-center w-full gap-3 pl-5 '>
@@ -290,18 +425,18 @@ const Profile = () => {
                 </form>
             </div>
             <div className="flex items-center justify-between w-full h-16 px-4 py-1 bg-gray-400">
-                <div className="w-4/12 text-lg font-semibold text-center">
+                <div className="w-4/12 font-semibold text-center text-md">
                     { alert.message &&
                         <div className={`px-4 py-1 shadow-sm shadow-black text-center rounded-full w-fit ${ alert.error ? "bg-red-400" : "bg-green-400"}`}>
                             {alert.message}
                         </div>
                     }
                 </div>
-                <div className="w-3/12 text-lg font-semibold text-center">
+                <div className="w-3/12 font-semibold text-center text-md">
                     Blood Donor Information System
                 </div>
-                <div className="w-4/12 text-lg font-semibold text-right">
-                    September 30, 2022 | 09:23 PM
+                <div className="w-4/12 font-semibold text-right text-md">
+                    <Datetime />
                 </div>
             </div>
         </div>

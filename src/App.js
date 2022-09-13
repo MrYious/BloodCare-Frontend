@@ -19,7 +19,6 @@ function App() {
         <Route path="history" element={<>History</>} />
         <Route path="reviews" element={<>Reviews</>} />
       </Route>
-
       <Route path="/profile" element={<Profile />} />
     </Routes>
   </>);

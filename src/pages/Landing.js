@@ -40,7 +40,6 @@ const Landing = () => {
                             spy={true}
                             smooth={true}
                             duration={500}
-                            offset={-70}
                             className="flex items-center gap-1 px-3 py-1 text-lg font-medium cursor-pointer hover:bg-red-800 hover:text-white w-fit"
                         >
                             {link.name}
@@ -51,7 +50,7 @@ const Landing = () => {
                     </Link>
                 </div>
             </div>
-            <div id="home" className='flex w-full h-screen px-24 pt-20 pb-10'>
+            <div id="home" className='flex w-full h-screen px-24 pt-20 pb-10 '>
                 <div className="flex flex-col justify-center w-3/5 gap-6">
                     <div className="w-full font-bold tracking-tight text-8xl">
                         SHARE YOUR <br />
@@ -74,7 +73,7 @@ const Landing = () => {
                     <img src={graphic2} alt="graphic1" width={"90%"} className="shadow-lg rounded-3xl shadow-slate-900"/>
                 </div>
             </div>
-            <div id="contact" className='flex flex-col items-center justify-start w-full h-screen gap-16'>
+            <div id="contact" className='flex flex-col items-center justify-start w-full h-screen gap-16 pt-24 '>
                 <div className='px-3 py-2 text-4xl font-bold tracking-tight border-b-4 border-red-700'>Contact Us</div>
                 <div className='flex items-center justify-center w-full gap-6 px-24'>
                     <div className="flex flex-col items-center justify-center w-2/5 gap-5">
@@ -102,7 +101,7 @@ const Landing = () => {
                     </div>
                 </div>
             </div>
-            <div id="about" className='flex flex-col items-center w-full h-screen gap-20'>
+            <div id="about" className='flex flex-col items-center w-full h-screen gap-20 pt-24'>
                 <div className='px-3 py-2 text-4xl font-bold tracking-tight border-b-4 border-red-700'>About Us</div>
                 <div id="home" className='flex items-center justify-center w-full px-24 gap-7'>
                     <div className="flex flex-col justify-center w-3/5 gap-3 text-xl font-semibold">

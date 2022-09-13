@@ -34,6 +34,7 @@ const Register = () => {
     const [mobileNo, setMobileNo] = useState('');
     const [email, setEmail] = useState('');
     const [profilePicture, setProfilePicture] = useState('');
+    const [profilePictureBlob, setProfilePictureBlob] = useState('');
 
     const [address1, setAddress1] = useState('');
 
@@ -90,6 +91,14 @@ const Register = () => {
         setBarangayAddr(e.target.selectedOptions[0].text);
     }
 
+    const onSelectFile = (e) => {
+        const selectedFiles = e.target.files;
+        const selectedFilesArray = Array.from(selectedFiles);
+        const image = URL.createObjectURL(selectedFilesArray[0]);
+        setProfilePicture(e.target.value);
+        setProfilePictureBlob(image);;
+    }
+
     const handleRegister = (e) => {
         if(!gender){
             setAlert({
@@ -143,7 +152,7 @@ const Register = () => {
                     age: age,
                     mobileNo: mobileNo,
                     email: email,
-                    profilePicture: profilePicture,
+                    profilePicture: '',
                     bloodType: bloodType,
                     password: password,
                     accountType: isDonor ? "Donor" : "Looking for Donor",
@@ -243,7 +252,7 @@ const Register = () => {
                             </div>
                             <div className='flex items-center gap-4 '>
                                 <div className='mr-12'>Upload Profile Picture* </div>
-                                <input className="px-2 py-1 border-2 border-gray-700 border-solid rounded-sm bg-slate-100" value={profilePicture} onChange={(e)=> {setProfilePicture(e.target.value)}} type={"file"}/>
+                                <input className="px-2 py-1 border-2 border-gray-700 border-solid rounded-sm bg-slate-100" value={profilePicture} onChange={onSelectFile} type={"file"} accept="image/png, image/jpg, image/jpeg"/>
                             </div>
                         </div>
                         <div className='text-2xl font-semibold'>
@@ -272,7 +281,7 @@ const Register = () => {
                                     }
                                 </select>
                                 <div className='mr-1'>City* </div>
-                                <select className="px-2 py-1 border-2 border-gray-700 rounded-lg w-fit" onChange={barangay} >
+                                <select className="px-2 py-1 border-2 border-gray-700 rounded-lg w-52" onChange={barangay} >
                                     <option disabled>Select City</option>
                                     {cityData && cityData.length > 0 && cityData.map((item) =>
                                         <option key={item.city_code} value={item.city_code}>

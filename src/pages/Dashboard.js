@@ -1,9 +1,12 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import Datetime from "../components/Datetime";
 import { FaHome } from "react-icons/fa";
 
 const Dashboard = () => {
+
+    // TODO: CONTENT NG TABS
 
     const navigate = useNavigate();
 
@@ -45,40 +48,40 @@ const Dashboard = () => {
             </div>
             {/* CONTENT */}
             <div className="flex w-full h-full">
-                <div className="flex flex-col items-center w-1/4 gap-4 p-6 ">
-                    <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white rounded-full  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
+                <div className="flex flex-col items-center w-1/5 gap-4 px-4 py-6 ">
+                    <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
                         Browse
                     </Link>
-                    <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white rounded-full ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                    <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                         Pending Requests
                     </Link>
-                    <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white rounded-full ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                    <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                         Active Requests
                     </Link>
-                    <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white  rounded-full ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                    <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                         History
                     </Link>
-                    <Link to={'reviews'} onClick={() => {setActiveState({E: true})}} className={`flex items-center w-full gap-1 px-6 py-3 text-2xl font-medium text-white  rounded-full ${activeState.E ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                    <Link to={'reviews'} onClick={() => {setActiveState({E: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.E ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                         Reviews
                     </Link>
                 </div>
-                <div className="flex items-center justify-center w-3/4 p-6 bg-red-100">
+                <div className="flex items-center justify-center w-4/5 p-6 bg-red-100">
                     <Outlet/>
                 </div>
             </div>
             <div className="flex items-center justify-between w-full h-16 px-4 py-1 bg-gray-400">
-                <div className="w-4/12 text-lg font-semibold text-center">
+                <div className="w-4/12 font-semibold text-center text-md">
                     { alert.message &&
                         <div className={`px-4 py-1 shadow-sm shadow-black text-center rounded-full w-fit ${ alert.error ? "bg-red-400" : "bg-green-400"}`}>
                             {alert.message}
                         </div>
                     }
                 </div>
-                <div className="w-3/12 text-lg font-semibold text-center">
+                <div className="w-3/12 font-semibold text-center text-md">
                     Blood Donor Information System
                 </div>
-                <div className="w-4/12 text-lg font-semibold text-right">
-                    September 30, 2022 | 09:23 PM
+                <div className="w-4/12 font-semibold text-right text-md">
+                    <Datetime />
                 </div>
             </div>
         </div>
