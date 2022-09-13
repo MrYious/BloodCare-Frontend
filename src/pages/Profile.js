@@ -230,7 +230,7 @@ const Profile = () => {
     return (<>
         <div className='flex flex-col items-center justify-between h-screen bg-gradient-to-r from-gray-200 to-gray-300'>
             {/* NAVBAR */}
-            <div className="flex items-center justify-between w-full px-3 py-2 border-b-2 border-gray-400 bg-gradient-to-r from-gray-200 to-gray-300">
+            <div className="flex items-center justify-between w-full px-3 py-2 border-b-2 border-red-900 select-none bg-gradient-to-r from-gray-200 to-gray-300">
                 {/* ICON */}
                 <Link to={'/dashboard'} className="flex items-center w-1/6 text-4xl font-bold text-red-900">
                     BloodCare
@@ -249,9 +249,9 @@ const Profile = () => {
                 </div>
             </div>
             {/* CONTENT */}
-            <div className="flex flex-col items-start justify-center w-full h-full gap-7 px-10 overflow-y-hidden">
+            <div className="flex flex-col items-start justify-center w-full h-full px-10 overflow-y-hidden gap-7">
                 {/* Header */}
-                <div className="flex items-center justify-between w-full px-10 py-3 border-b-4 border-red-700 gap-7">
+                <div className="flex items-center justify-between w-full px-10 py-3 border-b-4 border-red-700 select-none gap-7">
                     <div className="text-3xl font-bold ">
                         My Profile
                     </div>
@@ -332,11 +332,11 @@ const Profile = () => {
                         </div>
                     </div>
                     {/* COL2 */}
-                    <div className="flex flex-col w-1/2 gap-3 h-fit">
+                    <div className="flex flex-col w-1/2 gap-1 h-fit">
                         <div className='text-xl font-semibold'>
                             Address Information
                         </div>
-                        <div className='flex flex-col items-start justify-center w-full gap-1 pl-5 h-64 '>
+                        <div className='flex flex-col items-start justify-center w-full h-64 gap-1 pl-5 '>
                             <div className='flex items-center gap-4 '>
                                 <div className='mr-8 font-bold'>Region: </div>
                                 {
@@ -425,7 +425,7 @@ const Profile = () => {
                     </div>
                 </form>
             </div>
-            <div className="flex items-center justify-between w-full h-16 px-4 py-1 bg-gray-400">
+            <div className="flex items-center justify-between w-full h-16 px-4 py-1 bg-gray-400 select-none">
                 <div className="w-4/12 font-semibold text-center text-md">
                     { alert.message &&
                         <div className={`px-4 py-1 shadow-sm shadow-black text-center rounded-full w-fit ${ alert.error ? "bg-red-400" : "bg-green-400"}`}>
