@@ -1,4 +1,4 @@
-const PendingRequests = () => {
+const Reviews = () => {
 
     return (<>
         <div className="flex w-full h-full gap-5 px-4 py-6 ">
@@ -9,4 +9,4 @@ const PendingRequests = () => {
     </>);
 }
 
-export default PendingRequests;
+export default Reviews;

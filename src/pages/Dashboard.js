@@ -61,9 +61,9 @@ const Dashboard = () => {
     }
 
     return (<>
-        <div className='flex flex-col items-center justify-between h-screen overflow-y-hidden bg-gradient-to-r from-gray-200 to-gray-300'>
+        <div className='flex flex-col h-screen bg-gradient-to-r from-gray-200 to-gray-300'>
             {/* NAVBAR */}
-            <div className="flex items-center justify-between w-full px-3 py-2 border-b-2 border-red-900 select-none bg-gradient-to-r from-gray-200 to-gray-300">
+            <div className="flex items-center justify-between w-full px-3 py-2 border-b-2 border-red-900 select-none h-fit bg-gradient-to-r from-gray-200 to-gray-300">
                 {/* ICON */}
                 <Link to={'/dashboard'} className="flex items-center w-1/6 text-4xl font-bold text-red-900">
                     BloodCare
@@ -82,45 +82,48 @@ const Dashboard = () => {
                 </div>
             </div>
             {/* CONTENT */}
-            <div className="flex w-full h-full">
-                <div className="flex flex-col items-center w-1/5 gap-4 px-4 py-6 select-none">
-                    {
-                        isDonor ? <>
-                            <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
-                                Browse
-                            </Link>
-                            <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
-                                Pending Requests
-                            </Link>
-                            <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
-                                Active Requests
-                            </Link>
-                            <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
-                                History
-                            </Link>
-                            <Link to={'reviews'} onClick={() => {setActiveState({E: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.E ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
-                                Reviews
-                            </Link>
-                        </> : <>
-                            <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
-                                Browse
-                            </Link>
-                            <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
-                                Pending Requests
-                            </Link>
-                            <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
-                                Active Requests
-                            </Link>
-                            <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
-                                History
-                            </Link>
-                        </>
-                    }
+            <div className="flex items-center justify-center w-full h-full overflow-auto">
+                {/* SIDEBAR */}
+                <div className="flex flex-col items-center w-1/6 h-full gap-4 px-4 py-6 select-none">
+                {
+                    isDonor ? <>
+                        <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
+                            Browse
+                        </Link>
+                        <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                            Pending Requests
+                        </Link>
+                        <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                            Active Requests
+                        </Link>
+                        <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                            History
+                        </Link>
+                        <Link to={'reviews'} onClick={() => {setActiveState({E: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.E ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                            Reviews
+                        </Link>
+                    </> : <>
+                        <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
+                            Browse
+                        </Link>
+                        <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                            Pending Requests
+                        </Link>
+                        <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                            Active Requests
+                        </Link>
+                        <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                            History
+                        </Link>
+                    </>
+                }
                 </div>
-                <div className="flex items-center justify-center w-4/5 p-6 border-l-2 border-red-900">
+                {/* CONTENT */}
+                <div className="flex items-center justify-center w-5/6 h-full">
                     <Outlet/>
                 </div>
             </div>
+            {/* STATUSBAR */}
             <div className="flex items-center justify-between w-full h-16 px-4 py-1 bg-gray-400 select-none">
                 <div className="w-4/12 font-semibold text-center text-md">
                     { alert.message &&
