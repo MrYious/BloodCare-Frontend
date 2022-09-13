@@ -74,6 +74,7 @@ const Profile = () => {
         setProvinceAddr(localUserAddressData.province)
         setCityAddr(localUserAddressData.city)
         setBarangayAddr(localUserAddressData.barangay)
+        setNickname(localStorage.getItem('username'))
     }
 
     const onSelectFile = (e) => {
@@ -248,7 +249,7 @@ const Profile = () => {
                 </div>
             </div>
             {/* CONTENT */}
-            <div className="flex flex-col items-start justify-start w-full h-full gap-5 px-10 overflow-y-hidden">
+            <div className="flex flex-col items-start justify-center w-full h-full gap-7 px-10 overflow-y-hidden">
                 {/* Header */}
                 <div className="flex items-center justify-between w-full px-10 py-3 border-b-4 border-red-700 gap-7">
                     <div className="text-3xl font-bold ">
@@ -278,7 +279,7 @@ const Profile = () => {
                     </div>
                 </div>
                 {/* Scrollable Contents */}
-                <form onSubmit={()=> {}} className="flex items-start justify-start w-full gap-4 p-3 border-2 border-red-700 h-fit bg-red-50 rounded-xl ">
+                <form onSubmit={()=> {}} className="flex items-start justify-start w-full gap-4 h-fit ">
                     {/* COL1 */}
                     <div className="flex flex-col w-1/2 gap-2 h-fit">
                         <div className="flex justify-start gap-5 item-center">
@@ -335,7 +336,7 @@ const Profile = () => {
                         <div className='text-xl font-semibold'>
                             Address Information
                         </div>
-                        <div className='flex flex-col items-start justify-center w-full gap-3 pl-5'>
+                        <div className='flex flex-col items-start justify-center w-full gap-1 pl-5 h-64 '>
                             <div className='flex items-center gap-4 '>
                                 <div className='mr-8 font-bold'>Region: </div>
                                 {
