@@ -16,19 +16,18 @@ code {
     monospace;
 }
 
-
 .active {
   border-bottom: solid #991b1b 3px;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: rgb(187, 170, 170);
+  background: rgb(196, 161, 161);
 }
 
 /* Handle */
