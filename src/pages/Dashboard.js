@@ -51,7 +51,7 @@ const Dashboard = () => {
     });
 
     const [alert, setAlert] = useState({
-        message: 'Good Day',
+        message: 'Have a great day!',
         error: false
     });
 
@@ -70,13 +70,13 @@ const Dashboard = () => {
                 </Link>
                 {/* LINKS */}
                 <div className="flex items-center justify-end w-2/6 h-full gap-3 ">
-                    <Link to={'/dashboard'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-green-700 rounded-full shadow-md w-fit shadow-black">
-                        <FaHome width={20} className="my-1 text-red-50"/>
+                    <Link to={'/dashboard'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-green-700 rounded-md shadow-md w-fit shadow-black">
+                        <FaHome width={22} className="my-1 text-red-50"/>
                     </Link>
-                    <Link to={'/profile'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-md w-fit shadow-black">
+                    <Link to={'/profile'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-md shadow-md w-fit shadow-black">
                         {nickname}
                     </Link>
-                    <div onClick={handleLogout} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-md cursor-pointer w-fit shadow-black">
+                    <div onClick={handleLogout} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-md shadow-md cursor-pointer w-fit shadow-black">
                         Logout
                     </div>
                 </div>
@@ -87,32 +87,32 @@ const Dashboard = () => {
                 <div className="flex flex-col items-center w-1/6 h-full gap-4 px-4 py-6 select-none">
                 {
                     isDonor ? <>
-                        <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
+                        <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-sm  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
                             Browse
                         </Link>
-                        <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                        <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-sm ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                             Pending Requests
                         </Link>
-                        <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                        <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-sm ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                             Active Requests
                         </Link>
-                        <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                        <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-sm ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                             History
                         </Link>
-                        <Link to={'reviews'} onClick={() => {setActiveState({E: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.E ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                        <Link to={'reviews'} onClick={() => {setActiveState({E: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-sm ${activeState.E ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                             Reviews
                         </Link>
                     </> : <>
-                        <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
+                        <Link to={''} onClick={() => {setActiveState({A: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-sm  ${activeState.A ? "bg-green-900 shadow-lg shadow-black" : "bg-red-900 shadow-black shadow-md"} `}>
                             Browse
                         </Link>
-                        <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                        <Link to={'requests/pending'} onClick={() => {setActiveState({B: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-sm ${activeState.B ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                             Pending Requests
                         </Link>
-                        <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-full ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                        <Link to={'requests/active'} onClick={() => {setActiveState({C: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white rounded-sm ${activeState.C ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                             Active Requests
                         </Link>
-                        <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-full ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
+                        <Link to={'history'} onClick={() => {setActiveState({D: true})}} className={`flex items-center w-full gap-1 px-6 py-2 text-lg font-medium text-white  rounded-sm ${activeState.D ? "bg-green-900 shadow-lg shadow-black " : "bg-red-900 shadow-black shadow-md"} `}>
                             History
                         </Link>
                     </>
@@ -120,7 +120,7 @@ const Dashboard = () => {
                 </div>
                 {/* CONTENT */}
                 <div className="flex items-center justify-center w-5/6 h-full">
-                    <Outlet/>
+                    <Outlet context={{isDonor: isDonor}}/>
                 </div>
             </div>
             {/* STATUSBAR */}

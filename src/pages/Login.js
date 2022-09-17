@@ -52,16 +52,16 @@ const Login = () => {
                 </Link>
                 {/* LINKS */}
                 <div className="flex items-center justify-end w-5/6 h-full gap-3 ">
-                    <Link to={'/register'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-md w-fit shadow-black">
+                    <Link to={'/register'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-sm shadow-md w-fit shadow-black">
                         Register
                     </Link>
-                    <Link to={'/'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-md w-fit shadow-black">
+                    <Link to={'/'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-sm shadow-md w-fit shadow-black">
                         Home
                     </Link>
                 </div>
             </div>
             <div className="flex items-center justify-center w-full h-full ">
-                <div className="flex flex-col items-center justify-center w-2/6 gap-5 p-8 my-5 border-2 border-red-900 shadow-md shadow-red-900 bg-gradient-to-r from-gray-300 to-gray-300 rounded-3xl">
+                <div className="flex flex-col items-center justify-center w-2/6 gap-5 p-8 my-5 border-2 border-red-900 shadow-md shadow-red-900 bg-gradient-to-r from-gray-300 to-gray-300 rounded-[50px]">
                     <div className="flex flex-col items-center justify-center gap-3 text-5xl font-bold tracking-tight">
                         <FaUserAlt className="w-20 h-20 p-1 border-4 border-black rounded-full"/>
                         <div>
