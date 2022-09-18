@@ -132,18 +132,15 @@ const Register = () => {
             scroll.scrollToTop();
         }else {
             var addressID ;
-            axios.post('http://localhost:5000/address/', {
-                region: regionAddr,
-                province: provinceAddr,
-                city: cityAddr,
-                barangay: barangayAddr,
-                addressLine1: address1
-            })
-            .then(function (response) {
-                // SUCCESS
-                console.log("New Address Success", response.data)
-                addressID = response.data.id;
-                axios.post('http://localhost:5000/user/', {
+            axios.post('http://localhost:5000/main/register', {
+                address: {
+                    region: regionAddr,
+                    province: provinceAddr,
+                    city: cityAddr,
+                    barangay: barangayAddr,
+                    addressLine1: address1
+                },
+                user: {
                     addressID: addressID,
                     lastname: lastName,
                     firstname: firstName,
@@ -156,44 +153,21 @@ const Register = () => {
                     bloodType: bloodType,
                     password: password,
                     accountType: isDonor ? "Donor" : "Looking for Donor",
-                })
-                .then(function (response) {
-                    // SUCCESS
-                    console.log("New User Success", response.data)
-                    var userID = response.data.id;
-                    axios.post('http://localhost:5000/donorinfo/', {
-                        donorID: userID,
-                    })
-                    .then(function (response) {
-                        // SUCCESS
-                        console.log("New DonorInfo Success", response.data)
-                    })
-                    .catch(function (error) {
-                        // FAIL
-                        console.log("New DonorInfo Failed", error)
-                        setAlert({
-                            message: error.response.data.message,
-                            error: true
-                        });
-                    });
-                    navigate("/login")
-                })
-                .catch(function (error) {
-                    // FAIL
-                    console.log("New User Failed", error)
-                    setAlert({
-                        message: error.response.data.message,
-                        error: true
-                    });
-                });
+                }
+            })
+            .then(function (response) {
+                // SUCCESS
+                console.log("New User Success", response.data)
+                navigate("/login")
             })
             .catch(function (error) {
                 // FAIL
-                console.log("New Address Failed", error)
+                console.log("New User Failed", error)
                 setAlert({
                     message: error.response.data.message,
                     error: true
                 });
+                scroll.scrollToTop();
             });
         }
 
