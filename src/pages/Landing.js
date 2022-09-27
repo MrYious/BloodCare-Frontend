@@ -44,7 +44,7 @@ const Landing = () => {
                             {link.name}
                         </ScrollLink>
                     })}
-                    <Link to={'register'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-sm w-fit shadow-black">
+                    <Link to={'register'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-md w-fit shadow-black">
                         Register
                     </Link>
                 </div>
