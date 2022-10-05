@@ -39,3 +39,22 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(121, 19, 19);
 }
+
+.uploadcare--widget__button_type_open {
+  background-color: #545755;
+  cursor: pointer;
+}
+.uploadcare--widget__button_type_open:hover {
+  background-color: #303130;
+}
+
+/* rdt_Table
+rdt_TableRow
+rdt_TableCol
+rdt_TableCol_Sortable
+rdt_TableCell
+rdt_TableHeader
+rdt_TableFooter
+rdt_TableHeadRow
+rdt_TableBody
+rdt_ExpanderRow */

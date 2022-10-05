@@ -1,7 +1,7 @@
 import { FaFacebook, FaInstagram, FaReddit, FaTwitter } from "react-icons/fa";
+import { Link, Outlet } from "react-router-dom";
 
 import { HeartIcon } from '@heroicons/react/24/solid'
-import { Link } from "react-router-dom";
 import { Link as ScrollLink } from 'react-scroll'
 import computer from "../assets/computer.png"
 import graphic1 from "../assets/graphic1.jpg"
@@ -15,8 +15,15 @@ const Landing = () => {
     const [subject, setSubject] = useState('')
     const [message, setMessage] = useState('')
 
+
+    const [alert, setAlert] = useState({
+        message: 'Have a great day!',
+        error: false
+    });
+
     const links = [
         { to: "home", name: "Home"},
+        { to: "donors", name: "Donors"},
         { to: "contact", name: "Contact"},
         { to: "about", name: "About"},
     ]
@@ -45,7 +52,7 @@ const Landing = () => {
                         </ScrollLink>
                     })}
                     <Link to={'register'} className="flex items-center gap-1 px-4 py-2 text-lg font-medium text-white bg-red-900 rounded-full shadow-md w-fit shadow-black">
-                        Register
+                        DONATE
                     </Link>
                 </div>
             </div>
@@ -71,6 +78,14 @@ const Landing = () => {
                 <div className="flex flex-col items-center justify-center w-2/5 ">
                     <img src={graphic2} alt="graphic1" width={"90%"} className="shadow-lg rounded-3xl shadow-slate-900"/>
                 </div>
+            </div>
+            <div id="donors" className='flex flex-col items-center justify-start w-full h-[100vh] gap-1 px-10 pt-16'>
+                <div className='px-3 py-2 text-4xl font-bold tracking-tight border-b-4 border-red-700'>Our List of Donors</div>
+                <Outlet context={{
+                    isDonor: true,
+                    isGuess: true,
+                    setAlert
+                }}/>
             </div>
             <div id="contact" className='flex flex-col items-center justify-start w-full h-screen gap-16 pt-24 '>
                 <div className='px-3 py-2 text-4xl font-bold tracking-tight border-b-4 border-red-700'>Contact Us</div>

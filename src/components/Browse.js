@@ -5,18 +5,19 @@ import {
     regions,
 } from "select-philippines-address";
 import { useEffect, useState } from 'react'
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 import Rating from 'react-rating'
 import axios from "axios";
 import placeholder from "../assets/placeholder.jpg";
-import { useOutletContext } from "react-router-dom";
 
 const Browse = () => {
 
     // TODO
     //      SHOW NEARBY LOCATION (AUTOMATIC)
 
-    const {isDonor, userData, addressData, setAlert} = useOutletContext();
+    const navigate = useNavigate();
+    const {isDonor, userData, setAlert, isGuess} = useOutletContext();
 
     const [showDonorProfile, setShowDonorProfile] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -24,6 +25,8 @@ const Browse = () => {
     const [allDonors, setAllDonors] = useState([])
     const [filteredDonors, setFilteredDonors] = useState([])
     const [selectedDonor, setSelectedDonor] = useState({})
+
+    const [message, setMessage] = useState('')
 
     const [filters, setFilters] = useState({
         name: '',
@@ -131,7 +134,7 @@ const Browse = () => {
         }
         if(filters.rating){
             filtered = filtered.filter(donor =>
-                donor.rating === filters.rating
+                donor.donorInfo.avgRating === filters.rating
             );
         }
         if(filters.bloodType !== 'default'){
@@ -212,9 +215,9 @@ const Browse = () => {
                     ...user,
                     address: address.find(address => address.id === user.addressID),
                     donorInfo: donorInfo.find(donorInfo => donorInfo.donorID === user.id),
-                    requests: requests.find(req => req.donorID === user.id)
+                    requests: requests.filter(req => req.donorID === user.id)
                 }
-            }).filter( user => user.id !== userData.id);
+            })
 
             setAllDonors(ALLDONORS);
             setFilteredDonors(ALLDONORS);
@@ -233,6 +236,7 @@ const Browse = () => {
     const handleConfirmRequest = () => {
         axios.post('http://localhost:5000/main/request', {
             donorID: selectedDonor.id,
+            message: message,
             seekerID: userData.id,
         })
         .then(function (response) {
@@ -241,7 +245,6 @@ const Browse = () => {
                 message: 'Request was submitted',
                 error: false
             });
-            setShowDonorProfile(false);
             setShowModal(false);
         })
         .catch(function (error) {
@@ -270,6 +273,10 @@ const Browse = () => {
         });
     }, [showDonorProfile])
 
+    useEffect(() => {
+        setMessage('')
+    }, [showModal])
+
     return (<>
         {
             showModal && <>
@@ -285,8 +292,11 @@ const Browse = () => {
                             </svg>
                         </div>
                         {/* CONTENT */}
-                        <div className="w-full px-2 py-5 text-left bg-gray-100 h-fit">
-                            Are you sure you want to request blood from <b>{selectedDonor.firstname}</b>?
+                        <div className="flex flex-col w-full gap-4 px-2 py-5 text-left bg-gray-100 h-fit">
+                            <div>Are you sure you want to request blood from <b>{selectedDonor.firstname}</b>?</div>
+                            <div className="flex flex-col ">
+                                <textarea className="resize-none border-[1px] border-gray-800 p-1" placeholder="Enter a message to donor" name="message" id="message" value={message} onChange={e => setMessage(e.target.value)}></textarea>
+                            </div>
                         </div>
                         {/* ACTIONS */}
                         <div className="flex items-center justify-end w-full gap-2 p-2 font-semibold text-white bg-gray-200">
@@ -368,6 +378,11 @@ const Browse = () => {
                                         REQUEST BLOOD
                                     </button>
                                 }
+                                {isGuess && <>
+                                    <button onClick={()=> {navigate("/login")}} className='flex items-center px-2 py-1 text-white bg-green-700 shadow-sm shadow-black'>
+                                        LOGIN TO REQUEST BLOOD
+                                    </button>
+                                </>}
                                 <button onClick={() => {setShowDonorProfile(false)}} className='flex items-center px-2 py-1 text-white bg-red-900 shadow-sm shadow-black'>
                                     BACK
                                 </button>
@@ -416,35 +431,21 @@ const Browse = () => {
                                 </div>
                             </div>
                             <div className='flex flex-wrap items-start justify-start w-full h-full gap-2 p-2 overflow-y-auto border-t-2 border-red-900'>
-                                { !selectedDonor.requests ? <>
+                                { !selectedDonor.requests.length ? <>
                                     <div className='flex items-center justify-center w-full h-full '>
                                         There are no reviews.
                                     </div>
                                 </> : <>
-                                    <div className='flex flex-col items-center p-2 text-sm text-center w-[252px] h-[162px] bg-slate-100 gap-1 border-[2px] border-red-900 overflow-clip'>
-                                        <div>⭐⭐⭐⭐⭐</div>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi accusantium tenetur aliquam quidem aspernatur. Voluptate blanditiis reiciendis tenetur excepturi. Similique!
-                                    </div>
-                                    <div className='flex flex-col items-center p-2 text-sm text-center w-[252px] h-[162px] bg-slate-100 gap-1 border-[2px] border-red-900 overflow-clip'>
-                                        <div>⭐⭐⭐⭐</div>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi accusantium tenetur aliquam quidem aspernatur. Voluptate blanditiis reiciendis tenetur excepturi. Similique!
-                                    </div>
-                                    <div className='flex flex-col items-center p-2 text-sm text-center w-[252px] h-[162px] bg-slate-100 gap-1 border-[2px] border-red-900 overflow-clip'>
-                                        <div>⭐⭐⭐⭐⭐⭐</div>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi accusantium tenetur aliquam quidem aspernatur. Voluptate blanditiis reiciendis tenetur excepturi. Similique!
-                                    </div>
-                                    <div className='flex flex-col items-center p-2 text-sm text-center w-[252px] h-[162px] bg-slate-100 gap-1 border-[2px] border-red-900 overflow-clip'>
-                                        <div>⭐⭐</div>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi accusantium tenetur aliquam quidem aspernatur. Voluptate blanditiis reiciendis tenetur excepturi. Similique!
-                                    </div>
-                                    <div className='flex flex-col items-center p-2 text-sm text-center w-[252px] h-[162px] bg-slate-100 gap-1 border-[2px] border-red-900 overflow-clip'>
-                                        <div>⭐⭐⭐⭐</div>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi accusantium tenetur aliquam quidem aspernatur. Voluptate blanditiis reiciendis tenetur excepturi. Similique!
-                                    </div>
-                                    <div className='flex flex-col items-center p-2 text-sm text-center w-[252px] h-[162px] bg-slate-100 gap-1 border-[2px] border-red-900 overflow-clip'>
-                                        <div>⭐⭐⭐⭐⭐⭐</div>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi accusantium tenetur aliquam quidem aspernatur. Voluptate blanditiis reiciendis tenetur excepturi. Similique! Voluptate blanditiis reiciendis tenetur excepturi. Similique!Voluptate blanditiis reiciendis tenetur excepturi. Similique!
-                                    </div>
+                                    {
+                                        selectedDonor.requests.filter((req) => req.comment || req.rating ).map( (req, i) => {
+                                            return <>
+                                                <div key={i} className='flex flex-col items-center justify-center p-2 text-sm text-center w-[252px] h-[162px] bg-slate-100 gap-1 border-[2px] border-red-900 overflow-clip'>
+                                                    <div>{printStars(req.rating)}</div>
+                                                    {req.comment}
+                                                </div>
+                                            </>
+                                        })
+                                    }
                                 </>}
                             </div>
                         </div>

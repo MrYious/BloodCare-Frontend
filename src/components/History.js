@@ -46,88 +46,120 @@ const History = () => {
 		},
     ];
 
-    const ExpandedComponentSeeker = ({ data }) => <div className='flex items-start justify-start gap-4 p-3 overflow-auto bg-red-200 h-fit'>
-        <div className='w-32 h-32'>
-            <img src={placeholder} alt="profile" width={"100%"} className="border-2 border-red-900 rounded-full shadow-md shadow-red-900"/>
-        </div>
-        <div className='flex flex-col items-start justify-center w-1/3 h-full gap-2 '>
-            <div className=''>
-                <b>Type:</b> {data.user.accountType}
+    const ExpandedComponentSeeker = ({ data }) => <div className='flex flex-col items-start justify-start gap-2 p-3 overflow-auto bg-gray-200 h-fit'>
+        <div className='flex w-full gap-5'>
+            <div className='w-32 h-32'>
+                <img src={placeholder} alt="profile" width={"100%"} className="border-2 border-red-900 rounded-full shadow-md shadow-red-900"/>
             </div>
+            <div className='flex flex-col items-start justify-center w-2/5 h-full gap-2 '>
             <div className=''>
-                <b>Full name:</b> {data.user.lastname}, {data.user.firstname}  {data.user.middlename}
+                    <b>Type:</b> {data.user.accountType}
+                </div>
+                <div className=''>
+                    <b>Full name:</b> {data.user.lastname}, {data.user.firstname}  {data.user.middlename}
+                </div>
+                <div className=''>
+                    <b>Contact No:</b> {data.user.mobileNo}
+                </div>
+                <div className=''>
+                    <b>Email:</b> {data.user.email}
+                </div>
+                <div className=''>
+                    <b>Age:</b> {data.user.age}
+                </div>
+                <div className=''>
+                    <b>Your Message:</b> {data.message}
+                </div>
+                <br/>
+                <div className=''>
+                    <b>Donations:</b> {data.user.donorInfo.donations}
+                </div>
+                <div className=''>
+                    <b>Donor Rating:</b> {printStars(data.user.donorInfo.avgRating)} {data.user.donorInfo.avgRating}
+                </div>
+                {
+                    data.comment && <div className=''>
+                        <b>Your Comment:</b> {data.comment}
+                    </div>
+                }
+                {
+                    data.rating !== 0 && <div className=''>
+                        <b>Your Rating:</b> {printStars(data.rating)} {data.rating}
+                    </div>
+                }
             </div>
-            <div className=''>
-                <b>Blood Type:</b> {data.user.bloodType}
-            </div>
-            <div className=''>
-                <b>Gender:</b> {data.user.gender}
-            </div>
-            <div className=''>
-                <b>Age:</b> {data.user.age}
-            </div>
-            <div className=''>
-                <b>Donations:</b> {data.user.donorInfo.donations}
-            </div>
-            <div className=''>
-                <b>Rating:</b> {data.user.donorInfo.avgRating}
-            </div>
-        </div>
-        <div className='flex flex-col items-start justify-center w-1/2 h-full gap-2 '>
-            <div className=''>
-                <b>Region:</b> {data.user.address.region}
-            </div>
-            <div className=''>
-                <b>Province:</b> {data.user.address.province}
-            </div>
-            <div className=''>
-                <b>City:</b> {data.user.address.city}
-            </div>
-            <div className=''>
-                <b>Barangay:</b> {data.user.address.barangay}
-            </div>
-            <div className=''>
-                <b>Address Line:</b> {data.user.address.addressLine1}
+            <div className='flex flex-col items-start justify-center w-2/5 h-full gap-2 '>
+                <div className=''>
+                    <b>Region:</b> {data.user.address.region}
+                </div>
+                <div className=''>
+                    <b>Province:</b> {data.user.address.province}
+                </div>
+                <div className=''>
+                    <b>City:</b> {data.user.address.city}
+                </div>
+                <div className=''>
+                    <b>Barangay:</b> {data.user.address.barangay}
+                </div>
+                <div className=''>
+                    <b>Address Line:</b> {data.user.address.addressLine1}
+                </div>
             </div>
         </div>
     </div>;
 
-    const ExpandedComponentDonor = ({ data }) => <div className='flex items-start justify-start gap-4 p-3 overflow-auto bg-red-200 h-fit'>
-        <div className='w-32 h-32'>
-            <img src={placeholder} alt="profile" width={"100%"} className="border-2 border-red-900 rounded-full shadow-md shadow-red-900"/>
-        </div>
-        <div className='flex flex-col items-start justify-center w-1/3 h-full gap-2 '>
-            <div className=''>
-                <b>Type:</b> {data.user.accountType}
+    const ExpandedComponentDonor = ({ data }) => <div className='flex flex-col items-start justify-start gap-2 p-3 overflow-auto bg-gray-200 h-fit'>
+        <div className='flex w-full gap-5'>
+            <div className='w-32 h-32'>
+                <img src={placeholder} alt="profile" width={"100%"} className="border-2 border-red-900 rounded-full shadow-md shadow-red-900"/>
             </div>
+            <div className='flex flex-col items-start justify-center w-2/5 h-full gap-2 '>
             <div className=''>
-                <b>Full name:</b> {data.user.lastname}, {data.user.firstname}  {data.user.middlename}
+                    <b>Type:</b> {data.user.accountType}
+                </div>
+                <div className=''>
+                    <b>Full name:</b> {data.user.lastname}, {data.user.firstname}  {data.user.middlename}
+                </div>
+                <div className=''>
+                    <b>Contact No:</b> {data.user.mobileNo}
+                </div>
+                <div className=''>
+                    <b>Email:</b> {data.user.email}
+                </div>
+                <div className=''>
+                    <b>Age:</b> {data.user.age}
+                </div>
+                <br/>
+                <div className=''>
+                    <b>Seeker's Message:</b> {data.message}
+                </div>
+                {
+                    data.comment && <div className=''>
+                        <b>Comment:</b> {data.comment}
+                    </div>
+                }
+                {
+                    data.rating !== 0 && <div className=''>
+                        <b>Rating:</b> {printStars(data.rating)} {data.rating}
+                    </div>
+                }
             </div>
-            <div className=''>
-                <b>Blood Type:</b> {data.user.bloodType}
-            </div>
-            <div className=''>
-                <b>Gender:</b> {data.user.gender}
-            </div>
-            <div className=''>
-                <b>Age:</b> {data.user.age}
-            </div>
-        </div>
-        <div className='flex flex-col items-start justify-center w-1/2 h-full gap-2 '>
-            <div className=''>
-                <b>Region:</b> {data.user.address.region}
-            </div>
-            <div className=''>
-                <b>Province:</b> {data.user.address.province}
-            </div>
-            <div className=''>
-                <b>City:</b> {data.user.address.city}
-            </div>
-            <div className=''>
-                <b>Barangay:</b> {data.user.address.barangay}
-            </div>
-            <div className=''>
-                <b>Address Line:</b> {data.user.address.addressLine1}
+            <div className='flex flex-col items-start justify-center w-2/5 h-full gap-2 '>
+                <div className=''>
+                    <b>Region:</b> {data.user.address.region}
+                </div>
+                <div className=''>
+                    <b>Province:</b> {data.user.address.province}
+                </div>
+                <div className=''>
+                    <b>City:</b> {data.user.address.city}
+                </div>
+                <div className=''>
+                    <b>Barangay:</b> {data.user.address.barangay}
+                </div>
+                <div className=''>
+                    <b>Address Line:</b> {data.user.address.addressLine1}
+                </div>
             </div>
         </div>
     </div>;
@@ -135,8 +167,17 @@ const History = () => {
     const {isDonor, userData, addressData, setAlert} = useOutletContext();
 
     const [filterName, setFilterName] = useState('');
+    const [filterStatus, setFilterStatus] = useState('');
 
     const [allRequests, setAllRequests] = useState([])
+
+    const printStars = (num) => {
+        var star = [];
+        for (var i = 0; i < num; i++) {
+            star.push('⭐');
+        }
+        return star;
+    }
 
     const handleGetUserRequests = () => {
         axios.post(`http://localhost:5000/main/requestList`,{
@@ -185,6 +226,13 @@ const History = () => {
         <div className="flex w-full h-full gap-5 px-4 py-6 ">
             <div className="flex flex-col w-full h-full bg-gray-200 border-2 border-red-900 shadow-sm overflow-y-none shadow-black">
                 <div className='flex items-center justify-end w-full gap-5 px-2 py-2 h-fit'>
+                    <div>Status:</div>
+                    <select className="px-2 py-1 border-[1px] border-gray-700 rounded-sm bg-slate-100" value={filterStatus} onChange={(e)=>{setFilterStatus(e.target.value)}}>
+                        <option value={''} >All</option>
+                        <option value={'Completed'} >Completed</option>
+                        <option value={'Canceled'} >Canceled</option>
+                        <option value={'Declined'} >Declined</option>
+                    </select>
                     <div>Search by Name:</div>
                     <input type='text'  className="px-2 py-1 border-black border-[1px] bg-slate-100" value={filterName} onChange={(e)=>{setFilterName(e.target.value)}}/>
                 </div>
@@ -196,7 +244,9 @@ const History = () => {
                             request.user.firstname.toLowerCase().includes(filterName.toLowerCase())     ||
                             request.user.lastname.toLowerCase().includes(filterName.toLowerCase())      ||
                             request.user.middlename.toLowerCase().includes(filterName.toLowerCase())
-                        )}
+                        ).filter(request =>  filterStatus === '' ? request.status !== filterStatus : request.status === filterStatus)
+                        .sort((a,b) => a.createdAt < b.createdAt ? 1 : -1)
+                        }
                         pagination
                         striped
                         highlightOnHover

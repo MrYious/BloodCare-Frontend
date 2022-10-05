@@ -92,6 +92,7 @@ const Dashboard = () => {
                             isDonor: isDonor,
                             userData: localUserData,
                             addressData: localAddressData,
+                            isGuess: false,
                             setAlert
                         }}/>
                     </div>

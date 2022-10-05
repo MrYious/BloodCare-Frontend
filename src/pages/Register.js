@@ -6,6 +6,7 @@ import {
     regions,
 } from "select-philippines-address";
 
+import { Widget } from "@uploadcare/react-widget";
 import { animateScroll } from 'react-scroll'
 import axios from "axios";
 import { useEffect } from "react";
@@ -34,7 +35,6 @@ const Register = () => {
     const [mobileNo, setMobileNo] = useState('');
     const [email, setEmail] = useState('');
     const [profilePicture, setProfilePicture] = useState('');
-    const [profilePictureBlob, setProfilePictureBlob] = useState('');
 
     const [address1, setAddress1] = useState('');
 
@@ -91,13 +91,11 @@ const Register = () => {
         setBarangayAddr(e.target.selectedOptions[0].text);
     }
 
-    const onSelectFile = (e) => {
-        const selectedFiles = e.target.files;
-        const selectedFilesArray = Array.from(selectedFiles);
-        const image = URL.createObjectURL(selectedFilesArray[0]);
-        setProfilePicture(e.target.value);
-        setProfilePictureBlob(image);;
-    }
+    // const onSelectFile = (e) => {
+    //     // const selectedFiles = e.target.files;
+    //     // const selectedFilesArray = Array.from(selectedFiles);
+    //     // const image = URL.createObjectURL(selectedFilesArray[0]);
+    // }
 
     const handleRegister = (e) => {
         if(!gender){
@@ -149,7 +147,7 @@ const Register = () => {
                     age: age,
                     mobileNo: mobileNo,
                     email: email,
-                    profilePicture: '',
+                    profilePicture: profilePicture,
                     bloodType: bloodType,
                     password: password,
                     accountType: isDonor ? "Donor" : "Looking for Donor",
@@ -242,7 +240,18 @@ const Register = () => {
                             </div>
                             <div className='flex items-center gap-4 '>
                                 <div className='mr-12 font-semibold'>Upload Profile Picture* </div>
-                                <input className="px-2 py-1 border-2 border-gray-700 border-solid rounded-sm bg-slate-100" value={profilePicture} onChange={onSelectFile} type={"file"} accept="image/png, image/jpg, image/jpeg"/>
+                                <Widget
+                                    publicKey='4b572d139a11781a4e46'
+                                    id='file'
+                                    imagesOnly={true}
+                                    systemDialog={true}
+                                    onChange={ info => {
+                                        console.log('Upload completed:', info)
+                                        setProfilePicture(info.cdnUrl);
+                                        // setLocalUserData({...localUserData, profilePicture:  info.cdnUrl})
+                                    }}
+                                />
+                                {/* <input className="px-2 py-1 border-2 border-gray-700 border-solid rounded-sm bg-slate-100" value={profilePicture} onChange={onSelectFile} type={"file"} accept="image/png, image/jpg, image/jpeg"/> */}
                             </div>
                         </div>
                         <div className='text-xl font-semibold'>

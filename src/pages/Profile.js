@@ -9,8 +9,10 @@ import {
 import { useEffect, useState } from "react";
 
 import Datetime from "../components/Datetime";
+import { Widget } from "@uploadcare/react-widget";
 import axios from "axios";
 import placeholder from "../assets/placeholder.jpg";
+import uploadcare from 'uploadcare-widget/uploadcare.lang.en.min.js'
 
 const Profile = () => {
 
@@ -50,16 +52,6 @@ const Profile = () => {
         setNickname(localStorage.getItem('username'));
         setLocalUserData(JSON.parse(localStorage.getItem('userData')));
         setLocalAddressData(JSON.parse(localStorage.getItem('addressData')));
-    }
-
-    const onSelectFile = (e) => {
-        const selectedFiles = e.target.files;
-        const selectedFilesArray = Array.from(selectedFiles);
-        const image = URL.createObjectURL(selectedFilesArray[0]);
-        setLocalUserData({...localUserData, profilePicture: image});
-
-        console.log("Image ", image);
-        console.log("Type ", typeof(image));
     }
 
     const region = () => {
@@ -147,6 +139,7 @@ const Profile = () => {
         localStorage.clear();
     }
 
+
     return (<>
         <div className='flex flex-col items-center justify-between h-screen bg-gradient-to-r from-gray-200 to-gray-300'>
             {/* NAVBAR */}
@@ -208,15 +201,22 @@ const Profile = () => {
                     {/* COL1 */}
                     <div className="flex flex-col w-1/2 h-full gap-2">
                         <div className="flex justify-start gap-5 item-center">
-                            <label className="w-40 p-2 h-fit">
+                            <label className="w-40 p-2 gap-7 h-fit">
                                 <img src={localUserData.profilePicture ? localUserData.profilePicture : placeholder} alt="profile" width={"100%"} className="border-2 border-red-900 rounded-full shadow-lg cursor-pointer shadow-red-900"/>
-                                <input
-                                    type="file"
-                                    name="images"
-                                    onChange={onSelectFile}
-                                    accept="image/png, image/jpeg, image/jpg"
-                                    className="hidden"
-                                />
+                                {isEdit &&
+                                    <div className="hidden">
+                                        <Widget
+                                            publicKey='4b572d139a11781a4e46'
+                                            id='file'
+                                            imagesOnly={true}
+                                            systemDialog={true}
+                                            onChange={ info => {
+                                                console.log('Upload completed:', info)
+                                                setLocalUserData({...localUserData, profilePicture:  info.cdnUrl})
+                                            }}
+                                        />
+                                    </div>
+                                }
                             </label>
                             <div className="flex flex-col justify-center gap-2 ">
                                 <div className="text-md">
@@ -253,8 +253,8 @@ const Profile = () => {
                                 <div className='flex items-center gap-4 ' onChange={(e) => {setLocalUserData({...localUserData, gender:  e.target.value})}}>
                                     {
                                         isEdit ? <>
-                                            <input type="radio" className='' value="Male" name="gender" checked={localUserData.gender === "Male"} disabled={!isEdit}/> Male
-                                            <input type="radio" className='' value="Female" name="gender" checked={localUserData.gender === "Female"} disabled={!isEdit}/> Female
+                                            <input type="radio" className='' value="Male" name="gender" defaultChecked={localUserData.gender === "Male"}  disabled={!isEdit}/> Male
+                                            <input type="radio" className='' value="Female" name="gender" defaultChecked={localUserData.gender === "Female"} disabled={!isEdit}/> Female
                                         </> : <>
                                             {localUserData.gender}
                                         </>
